@@ -14,7 +14,7 @@
     {
       "binding": "DB",
       "database_name": "tech-safety-news",
-      "database_id": "00000000-0000-0000-0000-000000000000",
+      "database_id": "5ff64c0e-4078-410d-bc6b-3c79ecc2ab85",
       "migrations_dir": "migrations"
     }
   ],
