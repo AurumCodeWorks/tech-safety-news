@@ -20,6 +20,9 @@ export const ImageBlock = z.object({
   r2Key: z.string().min(1, 'Upload an image'),
   alt: z.string().trim().min(1, 'Describe the image for people who can’t see it'),
   caption: z.string().optional(),
+  /** Pixel size of the uploaded file, recorded by the uploader so the email can set width/height. */
+  width: z.number().int().positive().optional(),
+  height: z.number().int().positive().optional(),
 });
 export const CallUsBlock = z.object({ id, type: z.literal('call_us'), text: z.string().trim().min(1).default('Not sure? Call us on {phone}') });
 export const DividerBlock = z.object({ id, type: z.literal('divider') });

@@ -21,8 +21,6 @@
   "type": "module",
   "private": "true",
   "dependencies": {
-    "@react-email/components": "^1.0.12",
-    "@react-email/render": "^2.1.0",
     "@tabler/icons-react": "^3.49.0",
     "hono": "^4.13.13",
     "jose": "^6.2.12",
