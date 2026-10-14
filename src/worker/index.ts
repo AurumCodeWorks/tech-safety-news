@@ -4,6 +4,7 @@ import type { AppEnv, Env } from './env';
 import { handleScheduled } from './scheduled';
 import { unsubscribeRoutes } from './routes/unsubscribe';
 import { webhookRoutes } from './routes/webhooks';
+import { archiveRoutes } from './routes/archive';
 import { statsRoutes, statusRoutes } from './routes/api-status';
 import { listsRoutes } from './routes/api-lists';
 import { recipientsRoutes, suppressionsRoutes } from './routes/api-suppressions';
@@ -28,6 +29,7 @@ app.route('/api/media', mediaUploadRoutes);
 app.route('/media', mediaPublicRoutes);
 app.route('/u', unsubscribeRoutes);
 app.route('/webhooks', webhookRoutes);
+app.route('/', archiveRoutes);
 
 app.get('/admin', (c) => c.env.ASSETS.fetch(new URL('/index.html', c.req.url)));
 app.get('/admin/*', (c) => c.env.ASSETS.fetch(new URL('/index.html', c.req.url)));
