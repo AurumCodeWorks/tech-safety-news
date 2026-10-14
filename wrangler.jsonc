@@ -1,0 +1,33 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "tech-safety-news",
+  "main": "src/worker/index.ts",
+  "compatibility_date": "2026-08-15",
+  "compatibility_flags": ["nodejs_compat"],
+  "assets": {
+    "binding": "ASSETS",
+    "run_worker_first": true,
+    "not_found_handling": "none"
+  },
+  "routes": [{ "pattern": "news.enhancedgroup.co.uk", "custom_domain": true }],
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "tech-safety-news",
+      "database_id": "00000000-0000-0000-0000-000000000000",
+      "migrations_dir": "migrations"
+    }
+  ],
+  "r2_buckets": [{ "binding": "MEDIA", "bucket_name": "tech-safety-news-media" }],
+  "triggers": { "crons": ["*/5 * * * *"] },
+  "observability": { "enabled": true },
+  "vars": {
+    "PUBLIC_BASE_URL": "https://news.enhancedgroup.co.uk",
+    "MAILGUN_DOMAIN": "news.enhancedgroup.co.uk",
+    "MAILGUN_BASE_URL": "https://api.eu.mailgun.net",
+    "MAILGUN_BATCH_SIZE": "1000",
+    "SENDER_ADDRESS": "noreply@news.enhancedgroup.co.uk",
+    "ACCESS_TEAM_DOMAIN": "set-me.cloudflareaccess.com",
+    "ACCESS_AUD": "set-me"
+  }
+}
