@@ -28,6 +28,9 @@ export default defineConfig({
         },
       },
       {
+        test: { name: 'node', environment: 'node', include: ['test/node/**/*.test.ts'] },
+      },
+      {
         plugins: [react()],
         test: {
           name: 'app',
