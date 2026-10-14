@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import type { Block } from '../../shared/blocks';
 import { api } from '../api';
 
@@ -8,6 +8,19 @@ export function Preview({ content }: { content: Content }) {
   const [html, setHtml] = useState('');
   const [width, setWidth] = useState<600 | 375>(600);
   const [dark, setDark] = useState(false);
+  const frame = useRef<HTMLIFrameElement>(null);
+  const scrollY = useRef(0);
+
+  // Every update reloads the iframe, which would jump back to the top. Remember the reader's
+  // position while they scroll and put them back there after each reload.
+  const onLoad = () => {
+    const win = frame.current?.contentWindow;
+    if (!win) return;
+    win.scrollTo(0, scrollY.current);
+    win.addEventListener('scroll', () => {
+      scrollY.current = win.scrollY;
+    });
+  };
 
   useEffect(() => {
     const t = setTimeout(async () => {
@@ -46,6 +59,8 @@ export function Preview({ content }: { content: Content }) {
         </div>
       </div>
       <iframe
+        ref={frame}
+        onLoad={onLoad}
         title="Email preview"
         srcDoc={shown}
         // Same origin so images load (an opaque origin can't fetch from localhost); scripts stay blocked.
