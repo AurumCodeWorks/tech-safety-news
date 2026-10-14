@@ -15,6 +15,8 @@ import {
 } from '../db/campaigns';
 import { getSettings } from '../db/settings';
 import type { AppEnv } from '../env';
+import { MailgunError } from '../mailgun';
+import { NotReadyError, preflight, sendTest } from '../send';
 
 const SaveBody = DraftContentSchema.extend({
   listIds: z.array(z.number().int()).default([]),
@@ -80,6 +82,8 @@ campaignsRoutes.post('/:id/schedule', async (c) => {
     return c.json({ error: (e as Error).message }, 400);
   }
   if (Date.parse(utc) < nowMs(c.env) + MIN_LEAD_MS) return c.json({ error: 'Pick a time at least 5 minutes from now' }, 400);
+  const ready = await preflight(c.env, id);
+  if (!ready.ok) return c.json({ error: 'This email isn’t ready to send yet', reasons: ready.reasons }, 400);
   await setScheduled(c.env.DB, id, utc);
   return c.json(await getCampaign(c.env.DB, id));
 });
@@ -88,6 +92,21 @@ campaignsRoutes.post('/:id/unschedule', async (c) => {
   const id = Number(c.req.param('id'));
   await setScheduled(c.env.DB, id, null);
   return c.json(await getCampaign(c.env.DB, id));
+});
+
+campaignsRoutes.get('/:id/preflight', async (c) => c.json(await preflight(c.env, Number(c.req.param('id')))));
+
+campaignsRoutes.post('/:id/test', async (c) => {
+  const body = z.object({ to: z.email().optional() }).safeParse(await c.req.json().catch(() => ({})));
+  if (!body.success) return c.json({ error: 'Enter a valid email address' }, 400);
+  try {
+    await sendTest(c.env, Number(c.req.param('id')), body.data.to ?? c.get('userEmail'));
+  } catch (e) {
+    if (e instanceof NotReadyError) return c.json({ error: 'This email isn’t ready for a test yet', reasons: e.reasons }, 400);
+    if (e instanceof MailgunError) return c.json({ error: `Mailgun couldn’t send the test (${e.status})` }, 502);
+    throw e;
+  }
+  return c.body(null, 204);
 });
 
 export const previewRoutes = new Hono<AppEnv>();

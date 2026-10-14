@@ -20,3 +20,18 @@ export function pub(path: string, init: RequestInit = {}, extraEnv: Record<strin
 }
 
 export const uid = () => Math.random().toString(36).slice(2, 8);
+
+export type Captured = { url: string; auth: string | null; form: FormData | null; method: string };
+
+/** A fetch replacement that records requests (parsing multipart bodies) and answers with `respond`. */
+export function mockFetch(respond: (url: string, call: Captured) => Response) {
+  const calls: Captured[] = [];
+  const fn = async (input: RequestInfo | URL, init?: RequestInit) => {
+    const req = new Request(input, init);
+    const form = req.method === 'POST' && (req.headers.get('Content-Type') ?? '').includes('form') ? await req.formData() : null;
+    const call = { url: req.url, auth: req.headers.get('Authorization'), form, method: req.method };
+    calls.push(call);
+    return respond(req.url, call);
+  };
+  return { fn: fn as typeof fetch, calls };
+}
