@@ -1,4 +1,4 @@
-import { IconBooks, IconPlus, IconSend } from '@tabler/icons-react';
+import { IconAlertTriangle, IconAlignLeft, IconBooks, IconBulb, IconEye, IconPencil, IconPhone, IconPhoto, IconSend, IconSeparatorHorizontal, IconShieldExclamation, type Icon } from '@tabler/icons-react';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { Link, useNavigate, useParams } from 'react-router';
 import type { CampaignDto } from '../../shared/api-types';
@@ -15,6 +15,16 @@ import { useAutosave } from '../editor/useAutosave';
 
 type Draft = { subject: string; preheader: string; blocks: Block[]; listIds: number[]; hideFromArchive: boolean };
 
+const ADD_ICONS: Record<string, Icon> = {
+  scam_alert: IconShieldExclamation,
+  tip: IconBulb,
+  warning: IconAlertTriangle,
+  text: IconAlignLeft,
+  image: IconPhoto,
+  call_us: IconPhone,
+  divider: IconSeparatorHorizontal,
+};
+
 const SAVE_LABEL = { idle: '', saving: 'Saving…', saved: 'Saved', error: 'Couldn’t save' } as const;
 
 export function Editor() {
@@ -26,6 +36,7 @@ export function Editor() {
   const [sending, setSending] = useState(false);
   const [library, setLibrary] = useState(false);
   const [notice, setNotice] = useState<string | null>(null);
+  const [view, setView] = useState<'edit' | 'preview'>('edit');
 
   const load = useCallback(async () => {
     try {
@@ -70,10 +81,20 @@ export function Editor() {
 
   return (
     <div className="stack">
-      <div className="page-head">
-        <h1>{draft.subject || 'Untitled email'}</h1>
+      <div className="toolbar">
+        <h1 title={draft.subject}>{draft.subject || 'Untitled email'}</h1>
         <div className="row">
-          <span className="muted" aria-live="polite">
+          <div className="segmented view-switch" role="group" aria-label="Show">
+            <button type="button" aria-pressed={view === 'edit'} onClick={() => setView('edit')}>
+              <IconPencil size={16} aria-hidden="true" />
+              Edit
+            </button>
+            <button type="button" aria-pressed={view === 'preview'} onClick={() => setView('preview')}>
+              <IconEye size={16} aria-hidden="true" />
+              Preview
+            </button>
+          </div>
+          <span className="save-state" aria-live="polite">
             {autosave.state === 'error' ? `${SAVE_LABEL.error}: ${autosave.error}` : SAVE_LABEL[autosave.state]}
           </span>
           <Link className="button" to="/emails">
@@ -106,8 +127,8 @@ export function Editor() {
         </Banner>
       )}
 
-      <div style={{ display: 'grid', gridTemplateColumns: 'minmax(0, 1fr) minmax(0, 1fr)', gap: 24, alignItems: 'start' }}>
-        <div className="stack">
+      <div className="editor-grid" data-view={view}>
+        <div className="stack edit-col">
           <fieldset className="card stack" disabled={locked} style={{ margin: 0 }}>
             <div className="field">
               <label htmlFor="subject">Subject</label>
@@ -130,22 +151,27 @@ export function Editor() {
           {!locked && (
             <div className="card stack">
               <strong>Add a block</strong>
-              <div className="row">
-                {ADD_LABELS.map(([type, label]) => (
-                  <button key={type} type="button" className="button small" aria-label={`Add ${label}`} onClick={() => set({ blocks: [...draft.blocks, newBlock(type)] })}>
-                    <IconPlus size={16} aria-hidden="true" />
-                    {label}
-                  </button>
-                ))}
-                <button type="button" className="button small" onClick={() => setLibrary(true)}>
-                  <IconBooks size={16} aria-hidden="true" />
-                  Insert from library
+              <div className="add-grid">
+                {ADD_LABELS.map(([type, label]) => {
+                  const AddIcon = ADD_ICONS[type];
+                  return (
+                    <button key={type} type="button" className="add-tile" aria-label={`Add ${label}`} onClick={() => set({ blocks: [...draft.blocks, newBlock(type)] })}>
+                      <AddIcon size={22} stroke={1.6} aria-hidden="true" />
+                      {label}
+                    </button>
+                  );
+                })}
+                <button type="button" className="add-tile" onClick={() => setLibrary(true)}>
+                  <IconBooks size={22} stroke={1.6} aria-hidden="true" />
+                  From library
                 </button>
               </div>
             </div>
           )}
         </div>
-        <Preview content={previewContent} />
+        <div className="preview-col">
+          <Preview content={previewContent} />
+        </div>
       </div>
 
       {library && <LibraryDialog onInsert={(b) => set({ blocks: [...draft.blocks, b] })} onClose={() => setLibrary(false)} />}

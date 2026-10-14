@@ -1,4 +1,4 @@
-import { IconArrowDown, IconArrowUp, IconBookmark, IconCopy, IconTrash } from '@tabler/icons-react';
+import { IconArrowDown, IconArrowUp, IconBookmark, IconBookmarkFilled, IconCopy, IconTrash } from '@tabler/icons-react';
 import { useState } from 'react';
 import { CARD_TYPES, type Block } from '../../shared/blocks';
 import { api } from '../api';
@@ -31,29 +31,28 @@ export function BlockList({ blocks, onChange, readOnly }: { blocks: Block[]; onC
         const errors = blockErrors(b);
         const invalid = Object.keys(errors).length > 0;
         return (
-          <section key={b.id} className="card stack" data-testid="block" style={invalid ? { borderColor: 'var(--tsn-danger)' } : undefined}>
-            <div className="row" style={{ justifyContent: 'space-between' }}>
+          <section key={b.id} className={'card stack block ' + b.type + (invalid ? ' invalid-block' : '')} data-testid="block">
+            <div className="block-head">
               <span className={`badge ${PILL[b.type] ?? ''}`} data-testid="block-type">
                 {BLOCK_LABELS[b.type]}
               </span>
               {!readOnly && (
-                <div className="row">
-                  <button type="button" className="button small" aria-label="Move up" disabled={i === 0} onClick={() => move(i, -1)}>
+                <div className="row" style={{ gap: 2 }}>
+                  <button type="button" className="icon-button" title="Move up" aria-label="Move up" disabled={i === 0} onClick={() => move(i, -1)}>
                     <IconArrowUp size={16} aria-hidden="true" />
                   </button>
-                  <button type="button" className="button small" aria-label="Move down" disabled={i === blocks.length - 1} onClick={() => move(i, 1)}>
+                  <button type="button" className="icon-button" title="Move down" aria-label="Move down" disabled={i === blocks.length - 1} onClick={() => move(i, 1)}>
                     <IconArrowDown size={16} aria-hidden="true" />
                   </button>
-                  <button type="button" className="button small" aria-label="Duplicate" onClick={() => onChange([...blocks.slice(0, i + 1), cloneBlock(b), ...blocks.slice(i + 1)])}>
+                  <button type="button" className="icon-button" title="Duplicate" aria-label="Duplicate" onClick={() => onChange([...blocks.slice(0, i + 1), cloneBlock(b), ...blocks.slice(i + 1)])}>
                     <IconCopy size={16} aria-hidden="true" />
                   </button>
                   {(CARD_TYPES as readonly string[]).includes(b.type) && (
-                    <button type="button" className="button small" disabled={invalid} onClick={() => saveToLibrary(b)}>
-                      <IconBookmark size={16} aria-hidden="true" />
-                      {savedId === b.id ? 'Saved to library' : 'Save to library'}
+                    <button type="button" className="icon-button" disabled={invalid} title={savedId === b.id ? 'Saved to library' : 'Save to library'} aria-label={savedId === b.id ? 'Saved to library' : 'Save to library'} onClick={() => saveToLibrary(b)}>
+                      {savedId === b.id ? <IconBookmarkFilled size={16} aria-hidden="true" /> : <IconBookmark size={16} aria-hidden="true" />}
                     </button>
                   )}
-                  <button type="button" className="button small danger" aria-label="Delete block" onClick={() => onChange(blocks.filter((_, j) => j !== i))}>
+                  <button type="button" className="icon-button danger" title="Delete block" aria-label="Delete block" onClick={() => onChange(blocks.filter((_, j) => j !== i))}>
                     <IconTrash size={16} aria-hidden="true" />
                   </button>
                 </div>

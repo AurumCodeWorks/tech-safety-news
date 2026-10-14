@@ -26,21 +26,21 @@ export function Preview({ content }: { content: Content }) {
   const shown = html.replace('@media (prefers-color-scheme: dark)', dark ? '@media all' : '@media not all');
 
   return (
-    <div className="stack" style={{ position: 'sticky', top: 16 }}>
-      <div className="row">
-        <div className="tabs" role="group" aria-label="Preview width" style={{ margin: 0 }}>
-          <button type="button" className={`button small ${width === 600 ? 'primary' : ''}`} aria-pressed={width === 600} onClick={() => setWidth(600)}>
+    <div className="stack">
+      <div className="row" style={{ justifyContent: 'space-between' }}>
+        <div className="segmented" role="group" aria-label="Preview width">
+          <button type="button" aria-pressed={width === 600} onClick={() => setWidth(600)}>
             Desktop
           </button>
-          <button type="button" className={`button small ${width === 375 ? 'primary' : ''}`} aria-pressed={width === 375} onClick={() => setWidth(375)}>
+          <button type="button" aria-pressed={width === 375} onClick={() => setWidth(375)}>
             Mobile
           </button>
         </div>
-        <div className="tabs" role="group" aria-label="Preview colours" style={{ margin: 0 }}>
-          <button type="button" className={`button small ${!dark ? 'primary' : ''}`} aria-pressed={!dark} onClick={() => setDark(false)}>
+        <div className="segmented" role="group" aria-label="Preview colours">
+          <button type="button" aria-pressed={!dark} onClick={() => setDark(false)}>
             Light
           </button>
-          <button type="button" className={`button small ${dark ? 'primary' : ''}`} aria-pressed={dark} onClick={() => setDark(true)}>
+          <button type="button" aria-pressed={dark} onClick={() => setDark(true)}>
             Dark
           </button>
         </div>
@@ -50,7 +50,7 @@ export function Preview({ content }: { content: Content }) {
         srcDoc={shown}
         // Same origin so images load (an opaque origin can't fetch from localhost); scripts stay blocked.
         sandbox="allow-same-origin"
-        style={{ width: width + 24, maxWidth: '100%', height: '75vh', border: '1px solid var(--tsn-border)', borderRadius: 8, background: '#fff' }}
+        className={'preview-frame' + (width === 375 ? ' mobile' : '')}
       />
     </div>
   );
