@@ -16,7 +16,7 @@ import {
 import { getSettings } from '../db/settings';
 import type { AppEnv } from '../env';
 import { MailgunError } from '../mailgun';
-import { NotReadyError, preflight, sendTest } from '../send';
+import { NotReadyError, preflight, runCampaignSend, sendTest } from '../send';
 
 const SaveBody = DraftContentSchema.extend({
   listIds: z.array(z.number().int()).default([]),
@@ -107,6 +107,18 @@ campaignsRoutes.post('/:id/test', async (c) => {
     throw e;
   }
   return c.body(null, 204);
+});
+
+campaignsRoutes.post('/:id/send', async (c) => {
+  const id = Number(c.req.param('id'));
+  const ready = await preflight(c.env, id);
+  if (!ready.ok) return c.json({ error: 'This email isn’t ready to send yet', reasons: ready.reasons }, 400);
+  // Runs inline (not waitUntil) so the response reports the real outcome; lists are small.
+  return c.json(await runCampaignSend(c.env, id, c.get('userEmail')));
+});
+
+campaignsRoutes.post('/:id/retry', async (c) => {
+  return c.json(await runCampaignSend(c.env, Number(c.req.param('id')), c.get('userEmail'), { retryOnly: true }));
 });
 
 export const previewRoutes = new Hono<AppEnv>();

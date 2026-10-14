@@ -1,6 +1,7 @@
 import { Hono } from 'hono';
 import { createAccessMiddleware } from './auth';
 import type { AppEnv, Env } from './env';
+import { handleScheduled } from './scheduled';
 import { listsRoutes } from './routes/api-lists';
 import { recipientsRoutes, suppressionsRoutes } from './routes/api-suppressions';
 import { campaignsRoutes, previewRoutes } from './routes/api-campaigns';
@@ -26,7 +27,9 @@ app.get('/admin/*', (c) => c.env.ASSETS.fetch(new URL('/index.html', c.req.url))
 
 app.notFound((c) => (c.env.ASSETS ? c.env.ASSETS.fetch(c.req.raw) : c.json({ error: 'Not found' }, 404)));
 
-export async function scheduled(_controller: ScheduledController, _env: Env, _ctx: ExecutionContext): Promise<void> {}
+export async function scheduled(_controller: ScheduledController, env: Env, ctx: ExecutionContext): Promise<void> {
+  ctx.waitUntil(handleScheduled(env));
+}
 
 export default {
   fetch: app.fetch,
