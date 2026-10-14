@@ -358,9 +358,6 @@ table.list tr:last-child td {
 
 /* Editor */
 .toolbar {
-  position: sticky;
-  top: 0;
-  z-index: 5;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -391,13 +388,9 @@ table.list tr:last-child td {
   gap: 28px;
   align-items: start;
 }
-.preview-col {
-  position: sticky;
-  top: 84px;
-}
 .preview-frame {
   width: 100%;
-  height: calc(100vh - 170px);
+  flex: 1;
   min-height: 420px;
   border: 1px solid var(--tsn-border);
   border-radius: 8px;
@@ -506,7 +499,51 @@ table.list tr:last-child td {
   background: var(--tsn-surface);
   color: var(--tsn-text);
 }
+/* Wide screens: a fixed-height workspace. Only the form scrolls; toolbar and preview never move. */
+.main:has(.editor-page) {
+  padding-bottom: 0;
+}
+.editor-page {
+  height: 100vh;
+  gap: 0;
+}
+.editor-page .editor-grid {
+  flex: 1;
+  min-height: 0;
+  padding-bottom: 20px;
+}
+.editor-page .edit-col {
+  height: 100%;
+  overflow-y: auto;
+  padding: 4px 6px 24px 2px;
+  overscroll-behavior: contain;
+}
+.editor-page .preview-col {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+}
+.editor-page .preview-col > .stack {
+  flex: 1;
+  min-height: 0;
+}
+.editor-page > .banner {
+  margin: 0 0 12px;
+}
 @media (max-width: 1180px) {
+  .editor-page {
+    height: auto;
+  }
+  .editor-page .edit-col,
+  .editor-page .preview-col {
+    height: auto;
+    overflow: visible;
+  }
+  .editor-page .preview-frame {
+    height: calc(100vh - 160px);
+    flex: none;
+  }
   .editor-grid {
     grid-template-columns: minmax(0, 1fr);
   }
@@ -516,8 +553,5 @@ table.list tr:last-child td {
   .editor-grid[data-view='edit'] .preview-col,
   .editor-grid[data-view='preview'] .edit-col {
     display: none;
-  }
-  .preview-col {
-    position: static;
   }
 }

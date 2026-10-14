@@ -80,7 +80,7 @@ export function Editor() {
   };
 
   return (
-    <div className="stack">
+    <div className="stack editor-page">
       <div className="toolbar">
         <h1 title={draft.subject}>{draft.subject || 'Untitled email'}</h1>
         <div className="row">
