@@ -27,7 +27,7 @@
     "MAILGUN_BASE_URL": "https://api.eu.mailgun.net",
     "MAILGUN_BATCH_SIZE": "1000",
     "SENDER_ADDRESS": "noreply@news.enhancedgroup.co.uk",
-    "ACCESS_TEAM_DOMAIN": "set-me.cloudflareaccess.com",
-    "ACCESS_AUD": "set-me"
+    "ACCESS_TEAM_DOMAIN": "enhancedgroup.cloudflareaccess.com",
+    "ACCESS_AUD": "79bc992d84344691d1dc891deaf8462018cdfb170d386cdee53e80516589edc9"
   }
 }

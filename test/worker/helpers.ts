@@ -11,7 +11,7 @@ export function api(path: string, init: RequestInit & { json?: unknown } = {}, e
     headers.set('Content-Type', 'application/json');
     body = JSON.stringify(init.json);
   }
-  return app.request(`${BASE}${path}`, { ...init, headers, body }, { ...env, DEV_AUTH_BYPASS: 'true', ...extraEnv });
+  return app.request(`${BASE}${path}`, { ...init, headers, body }, { ...env, DEV_AUTH_BYPASS: 'true', ACCESS_AUD: 'set-me', ...extraEnv });
 }
 
 /** Public (no auth) request. */
