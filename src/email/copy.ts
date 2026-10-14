@@ -1,4 +1,4 @@
-import type { Settings } from '../worker/db/settings';
+import type { Settings } from '../shared/settings';
 
 // Exact footer copy from the spec (§8). Shared by the HTML and plain-text renderers.
 export const NEVER_ASK = 'Messages from this service will never ask for your personal information.';

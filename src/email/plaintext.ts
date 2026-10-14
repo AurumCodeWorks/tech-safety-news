@@ -1,6 +1,6 @@
 import type { Block, CampaignContent } from '../shared/blocks';
 import { richToText } from '../shared/richtext';
-import type { Settings } from '../worker/db/settings';
+import type { Settings } from '../shared/settings';
 import { footerLines } from './copy';
 
 function heading(label: string, title: string): string {

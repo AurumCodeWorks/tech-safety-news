@@ -1,11 +1,6 @@
-export type Settings = {
-  sender_name: string;
-  phone: string;
-  legal_name: string;
-  company_number: string;
-  registered_office: string;
-  ce_certificate_id: string;
-};
+import type { Settings } from '../../shared/settings';
+
+export type { Settings };
 
 export const SETTING_KEYS = [
   'sender_name',

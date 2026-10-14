@@ -1,5 +1,5 @@
 import type { CampaignContent } from '../../src/shared/blocks';
-import type { Settings } from '../../src/worker/db/settings';
+import type { Settings } from '../../src/shared/settings';
 
 export const settings: Settings = {
   sender_name: 'Enhanced Group Tech Safety',

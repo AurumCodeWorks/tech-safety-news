@@ -1,8 +1,15 @@
 import { render, screen } from '@testing-library/react';
-import { expect, it } from 'vitest';
+import { MemoryRouter } from 'react-router';
+import { expect, it, vi } from 'vitest';
 import { App } from '../../src/app/App';
 
-it('renders the app shell heading', () => {
-  render(<App />);
-  expect(screen.getByText('Tech Safety News')).toBeInTheDocument();
+it('renders the app shell', () => {
+  vi.stubGlobal('fetch', vi.fn(async () => Response.json({})));
+  render(
+    <MemoryRouter>
+      <App />
+    </MemoryRouter>,
+  );
+  expect(screen.getAllByAltText('Enhanced Group Tech Safety News').length).toBeGreaterThan(0);
+  vi.unstubAllGlobals();
 });

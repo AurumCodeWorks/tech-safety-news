@@ -2,7 +2,7 @@ import type { CampaignContent } from '../shared/blocks';
 import { escapeHtml } from '../shared/richtext';
 import { formatLondonDate } from '../shared/time';
 import { ink, themes } from '../shared/tokens';
-import type { Settings } from '../worker/db/settings';
+import type { Settings } from '../shared/settings';
 import { imgPair, renderBlock, type Ctx } from './components';
 import { legalLine, NEVER_ASK, oneWayNotice } from './copy';
 import { blocksToText } from './plaintext';
