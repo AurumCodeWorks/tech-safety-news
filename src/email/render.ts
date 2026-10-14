@@ -38,8 +38,8 @@ export function mailgunVariables(r: Recipient & { sendId: number }): Record<stri
 
 function header(ctx: Ctx, issueDate: string): string {
   const logo = imgPair({
-    light: `${ctx.baseUrl}/brand/email-logo-light@2x.png`,
-    dark: `${ctx.baseUrl}/brand/email-logo-dark@2x.png`,
+    light: `${ctx.baseUrl}/brand/email-logo-light-2x.png`,
+    dark: `${ctx.baseUrl}/brand/email-logo-dark-2x.png`,
     alt: 'Enhanced Group Tech Safety News',
     width: 260,
     height: 52,
@@ -68,7 +68,7 @@ function footer(ctx: Ctx, settings: Settings, mode: RenderInput['mode'], links: 
     `<p class="${cls}" style="margin:0 0 10px 0;font-family:${FONT};font-size:15px;line-height:1.5;color:${color};${extra}">${html}</p>`;
   const safe =
     `<table role="presentation" cellpadding="0" cellspacing="0" border="0" style="margin-bottom:12px;"><tr>` +
-    `<td width="22" valign="top" style="width:22px;padding-top:1px;">${imgPair({ light: `${ctx.baseUrl}/icons/shield-check-light@2x.png`, dark: `${ctx.baseUrl}/icons/shield-check-dark@2x.png`, alt: 'Shield', width: 22, height: 22 })}</td>` +
+    `<td width="22" valign="top" style="width:22px;padding-top:1px;">${imgPair({ light: `${ctx.baseUrl}/icons/shield-check-light-2x.png`, dark: `${ctx.baseUrl}/icons/shield-check-dark-2x.png`, alt: 'Shield', width: 22, height: 22 })}</td>` +
     `<td valign="top" style="padding-left:8px;">${p('t-safe', L.success, escapeHtml(NEVER_ASK), 'font-size:16px;font-weight:bold;margin:0;')}</td></tr></table>`;
   const linkHtml = links
     ? p(

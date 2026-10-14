@@ -242,7 +242,7 @@ One renderer in `/src/email` produces `{ html, text }` from `{ campaign, setting
 ### Generated assets (`scripts/build-brand.ts`, using `@resvg/resvg-js` + `png-to-ico`)
 | Asset | Output |
 |---|---|
-| Email header logo (light + dark) | `email-logo-light@2x.png`, `email-logo-dark@2x.png` (rendered 2×, displayed at 1×) |
+| Email header logo (light + dark) | `email-logo-light-2x.png`, `email-logo-dark-2x.png` (rendered 2×, displayed at 1×) |
 | Admin/archive logo | `logo-light.svg`, `logo-dark.svg` |
 | Favicon | `favicon.svg` (internal `prefers-color-scheme` swap), `favicon.ico` (16/32/48), `apple-touch-icon.png` (180), `icon-192.png`, `icon-512.png`, `site.webmanifest` |
 | Social share | `og-image.png` (1200×630) |

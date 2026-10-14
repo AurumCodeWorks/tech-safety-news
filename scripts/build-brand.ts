@@ -99,7 +99,7 @@ for (const mode of ['light', 'dark'] as const) {
   write(`brand/logo-lockup-${mode}.svg`, lockupSvg(mode));
   write(`public/brand/logo-mark-${mode}.svg`, markSvg(mode));
   write(`public/brand/logo-lockup-${mode}.svg`, lockupSvg(mode));
-  write(`public/brand/email-logo-${mode}@2x.png`, png(lockupSvg(mode), 520));
+  write(`public/brand/email-logo-${mode}-2x.png`, png(lockupSvg(mode), 520));
 }
 
 // Favicon that swaps with the browser theme
@@ -145,6 +145,6 @@ for (const spec of emailIcons) {
     const c = spec.circle?.(mode);
     const circle = c ? `<circle cx="34" cy="34" r="${c.stroke ? 33 : 34}" fill="${c.fill}"${c.stroke ? ` stroke="${c.stroke}" stroke-width="2"` : ''}/>` : '';
     const svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 68 68" width="68" height="68">${circle}${iconGroup(spec.name, 34, 34, c ? 38 : 52, spec.color(mode))}</svg>`;
-    write(`public/icons/${spec.name}-${mode}@2x.png`, png(svg, 68));
+    write(`public/icons/${spec.name}-${mode}-2x.png`, png(svg, 68));
   }
 }

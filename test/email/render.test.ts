@@ -64,7 +64,7 @@ describe('renderCampaign (email mode)', async () => {
     expect(html).toContain('prefers-color-scheme: dark');
     expect(html).toContain('<meta name="color-scheme" content="light dark">');
     expect(html).toContain('[data-ogsc]');
-    expect(html).toContain('email-logo-dark@2x.png');
+    expect(html).toContain('email-logo-dark-2x.png');
   });
 
   it('renders rich text links and bold', () => {

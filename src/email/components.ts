@@ -22,7 +22,7 @@ export function imgPair(opts: { light: string; dark: string; alt: string; width:
 }
 
 const icon = (ctx: Ctx, name: string, alt: string, size = 34) =>
-  imgPair({ light: `${ctx.baseUrl}/icons/${name}-light@2x.png`, dark: `${ctx.baseUrl}/icons/${name}-dark@2x.png`, alt, width: size, height: size });
+  imgPair({ light: `${ctx.baseUrl}/icons/${name}-light-2x.png`, dark: `${ctx.baseUrl}/icons/${name}-dark-2x.png`, alt, width: size, height: size });
 
 /** Rich text with inline styles added to every <p> and <a>. */
 export function styledRich(src: string, color: string, cls: string, linkColor: string, linkCls: string, extra = ''): string {
@@ -103,7 +103,7 @@ export function renderBlock(block: Block, ctx: Ctx): string {
         `<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" bgcolor="${L.key}" class="key-bar" style="background-color:${L.key};border-radius:5px;">` +
         `<tr><td class="pad" style="padding:16px 22px;">` +
         `<a href="${telHref(ctx.phone)}" class="on-key" style="color:${L.onKey};text-decoration:none;font-family:${FONT};font-size:20px;line-height:1.4;font-weight:bold;">` +
-        imgPair({ light: `${ctx.baseUrl}/icons/phone-light@2x.png`, dark: `${ctx.baseUrl}/icons/phone-dark@2x.png`, alt: 'Phone', width: 26, height: 26, inline: true, style: 'vertical-align:middle;margin-right:10px;' }) +
+        imgPair({ light: `${ctx.baseUrl}/icons/phone-light-2x.png`, dark: `${ctx.baseUrl}/icons/phone-dark-2x.png`, alt: 'Phone', width: 26, height: 26, inline: true, style: 'vertical-align:middle;margin-right:10px;' }) +
         `<span class="on-key" style="color:${L.onKey};vertical-align:middle;">${text}</span></a></td></tr></table></td></tr>`
       );
     }

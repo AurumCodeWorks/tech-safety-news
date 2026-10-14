@@ -15,12 +15,12 @@ describe('generated brand assets (run `npm run brand` first)', () => {
     expect(pngSize('public/og-image.png')).toEqual({ width: 1200, height: 630 });
   });
   it('renders email logos at 2x of 260x52', () => {
-    expect(pngSize('public/brand/email-logo-light@2x.png')).toEqual({ width: 520, height: 104 });
-    expect(pngSize('public/brand/email-logo-dark@2x.png')).toEqual({ width: 520, height: 104 });
+    expect(pngSize('public/brand/email-logo-light-2x.png')).toEqual({ width: 520, height: 104 });
+    expect(pngSize('public/brand/email-logo-dark-2x.png')).toEqual({ width: 520, height: 104 });
   });
   it('renders every email icon in both modes at 68x68', () => {
     for (const name of ['shield-exclamation', 'bulb', 'alert-triangle', 'phone', 'shield-check']) {
-      for (const mode of ['light', 'dark']) expect(pngSize(`public/icons/${name}-${mode}@2x.png`)).toEqual({ width: 68, height: 68 });
+      for (const mode of ['light', 'dark']) expect(pngSize(`public/icons/${name}-${mode}-2x.png`)).toEqual({ width: 68, height: 68 });
     }
   });
   it('ships a favicon that swaps in dark mode', () => {
