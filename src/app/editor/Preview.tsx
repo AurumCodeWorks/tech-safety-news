@@ -50,7 +50,7 @@ export function Preview({ content }: { content: Content }) {
         srcDoc={shown}
         // Same origin so images load (an opaque origin can't fetch from localhost); scripts stay blocked.
         sandbox="allow-same-origin"
-        style={{ width: width + 24, maxWidth: '100%', height: '75vh', border: '1px solid var(--tsn-border)', borderRadius: 12, background: '#fff' }}
+        style={{ width: width + 24, maxWidth: '100%', height: '75vh', border: '1px solid var(--tsn-border)', borderRadius: 8, background: '#fff' }}
       />
     </div>
   );

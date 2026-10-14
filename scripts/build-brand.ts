@@ -30,7 +30,7 @@ function markInner(mode: ThemeMode, idSuffix: string, withClasses = false): stri
   const c = logo[mode];
   const clip = `tile-${idSuffix}`;
   return (
-    `<defs><clipPath id="${clip}"><rect x="2" y="2" width="44" height="44" rx="11.5"/></clipPath></defs>` +
+    `<defs><clipPath id="${clip}"><rect x="2" y="2" width="44" height="44" rx="9"/></clipPath></defs>` +
     `<g clip-path="url(#${clip})">` +
     `<rect${withClasses ? ' class="tile"' : ''} x="2" y="2" width="44" height="44" fill="${c.tile}"/>` +
     `<rect x="2" y="38.5" width="14.67" height="7.5" fill="${ink.cyan}"/>` +

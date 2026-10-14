@@ -56,7 +56,7 @@ function ImageFields({ block, onChange, errors }: { block: Extract<Block, { type
         <input id={id} type="file" accept="image/png,image/jpeg" onChange={(e) => upload(e.target.files?.[0])} />
       </Field>
       {uploading && <p className="muted">Uploading…</p>}
-      {block.r2Key && <img src={`/media/${block.r2Key}`} alt="" style={{ maxWidth: '100%', borderRadius: 8 }} />}
+      {block.r2Key && <img src={`/media/${block.r2Key}`} alt="" style={{ maxWidth: '100%', borderRadius: 5 }} />}
       <Text label="Description for people who can’t see the image" value={block.alt} onChange={(alt) => onChange({ ...block, alt })} error={errors.alt} />
       <Text label="Caption (optional)" value={block.caption ?? ''} onChange={(caption) => onChange({ ...block, caption: caption || undefined })} />
     </>

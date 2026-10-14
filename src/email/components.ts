@@ -32,13 +32,13 @@ export function styledRich(src: string, color: string, cls: string, linkColor: s
 }
 
 function pill(text: string, a: AlertTokens, cls: string): string {
-  return `<span class="${cls}-pill" style="display:inline-block;background-color:${a.pillBg};color:${a.pillText};font-family:${FONT};font-size:14px;font-weight:bold;line-height:1;padding:6px 12px;border-radius:999px;mso-padding-alt:0;">${text}</span>`;
+  return `<span class="${cls}-pill" style="display:inline-block;background-color:${a.pillBg};color:${a.pillText};font-family:${FONT};font-size:14px;font-weight:bold;line-height:1;padding:6px 12px;border-radius:6px;mso-padding-alt:0;">${text}</span>`;
 }
 
 function card(cls: string, a: AlertTokens, inner: string): string {
   return (
     `<tr><td style="padding:0 0 16px 0;">` +
-    `<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" bgcolor="${a.cardBg}" class="${cls}-card" style="background-color:${a.cardBg};border:1px solid ${a.border};border-radius:8px;">` +
+    `<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" bgcolor="${a.cardBg}" class="${cls}-card" style="background-color:${a.cardBg};border:1px solid ${a.border};border-radius:5px;">` +
     `<tr><td class="pad" style="padding:20px 22px;">${inner}</td></tr></table></td></tr>`
   );
 }
@@ -94,13 +94,13 @@ export function renderBlock(block: Block, ctx: Ctx): string {
       const caption = block.caption
         ? `<p class="t-muted" style="margin:8px 0 0 0;font-family:${FONT};font-size:16px;line-height:1.4;color:${L.textMuted};">${escapeHtml(block.caption)}</p>`
         : '';
-      return `<tr><td style="padding:0 0 16px 0;"><img src="${src}" alt="${escapeHtml(block.alt)}" width="600" height="${height}" style="display:block;width:100%;max-width:600px;height:auto;border:0;border-radius:8px;">${caption}</td></tr>`;
+      return `<tr><td style="padding:0 0 16px 0;"><img src="${src}" alt="${escapeHtml(block.alt)}" width="600" height="${height}" style="display:block;width:100%;max-width:600px;height:auto;border:0;border-radius:5px;">${caption}</td></tr>`;
     }
     case 'call_us': {
       const text = escapeHtml(block.text.replace('{phone}', ctx.phone));
       return (
         `<tr><td style="padding:0 0 16px 0;">` +
-        `<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" bgcolor="${L.key}" class="key-bar" style="background-color:${L.key};border-radius:8px;">` +
+        `<table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" bgcolor="${L.key}" class="key-bar" style="background-color:${L.key};border-radius:5px;">` +
         `<tr><td class="pad" style="padding:16px 22px;">` +
         `<a href="${telHref(ctx.phone)}" class="on-key" style="color:${L.onKey};text-decoration:none;font-family:${FONT};font-size:20px;line-height:1.4;font-weight:bold;">` +
         imgPair({ light: `${ctx.baseUrl}/icons/phone-light@2x.png`, dark: `${ctx.baseUrl}/icons/phone-dark@2x.png`, alt: 'Phone', width: 26, height: 26, inline: true, style: 'vertical-align:middle;margin-right:10px;' }) +

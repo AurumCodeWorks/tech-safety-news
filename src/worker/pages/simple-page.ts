@@ -21,14 +21,14 @@ body{margin:0;background:var(--bg);color:var(--body);font-family:Arial,Helvetica
 header{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-bottom:24px}
 .logo-dark{display:none}
 .rule{display:flex;height:4px;margin:0 0 28px}.rule span{flex:1}
-main{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:28px 24px}
+main{background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:28px 24px}
 h1{color:var(--text);font-size:30px;line-height:1.25;margin:0 0 16px}
 h2{color:var(--text);font-size:24px;margin:0 0 8px}
 p{margin:0 0 16px}
 a{color:var(--accent)}
-.button{display:inline-block;background:var(--key);color:var(--on-key);border:0;border-radius:10px;padding:16px 28px;font:bold 20px Arial,Helvetica,sans-serif;cursor:pointer;text-decoration:none}
+.button{display:inline-block;background:var(--key);color:var(--on-key);border:0;border-radius:6px;padding:16px 28px;font:bold 20px Arial,Helvetica,sans-serif;cursor:pointer;text-decoration:none}
 .button:focus-visible,a:focus-visible,button:focus-visible{outline:3px solid var(--focus);outline-offset:3px}
-.toggle{background:transparent;border:1px solid var(--border);color:var(--text);border-radius:999px;padding:8px 14px;font:16px Arial,Helvetica,sans-serif;cursor:pointer}
+.toggle{background:transparent;border:1px solid var(--border);color:var(--text);border-radius:6px;padding:8px 14px;font:16px Arial,Helvetica,sans-serif;cursor:pointer}
 footer{color:var(--muted);font-size:16px;margin-top:28px}
 `;
 

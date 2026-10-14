@@ -48,7 +48,7 @@ function header(ctx: Ctx, issueDate: string): string {
     .map((c) => `<td width="33%" height="4" bgcolor="${c}" style="background-color:${c};height:4px;font-size:0;line-height:0;">&nbsp;</td>`)
     .join('');
   return (
-    `<tr><td class="bg-surface pad" bgcolor="${L.surface}" style="background-color:${L.surface};padding:20px 24px 16px 24px;border-radius:8px 8px 0 0;">${logo}` +
+    `<tr><td class="bg-surface pad" bgcolor="${L.surface}" style="background-color:${L.surface};padding:20px 24px 16px 24px;border-radius:5px 5px 0 0;">${logo}` +
     `<p class="t-muted" style="margin:12px 0 0 0;font-family:${FONT};font-size:15px;line-height:1.4;color:${L.textMuted};">${escapeHtml(formatLondonDate(issueDate))}</p></td></tr>` +
     `<tr><td style="padding:0 0 20px 0;"><table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0"><tr>${rule}</tr></table></td></tr>`
   );
@@ -57,7 +57,7 @@ function header(ctx: Ctx, issueDate: string): string {
 function ceBadge(certId: string): string {
   const id = encodeURIComponent(certId);
   return (
-    `<table role="presentation" cellpadding="0" cellspacing="0" border="0" style="margin-top:16px;"><tr><td class="ce-chip" style="padding:6px;border-radius:6px;">` +
+    `<table role="presentation" cellpadding="0" cellspacing="0" border="0" style="margin-top:16px;"><tr><td class="ce-chip" style="padding:6px;border-radius:4px;">` +
     `<a href="https://registry.blockmarktech.com/certificates/${id}/active/?source=email"><img alt="Cyber Essentials Plus logo" src="https://registry.blockmarktech.com/certificates/${id}/email-image/?width=83&height=100&non_padded=t" width="83" height="100" style="display:block;border:0;"/></a>` +
     `</td></tr></table>`
   );

@@ -67,7 +67,7 @@ describe('lists API', () => {
 
   it('requires sign-in', async () => {
     const { app } = await import('../../src/worker/index');
-    const res = await app.request('https://news.enhancedgroup.co.uk/api/lists', {}, env);
+    const res = await app.request('https://news.enhancedgroup.co.uk/api/lists', {}, { ...env, DEV_AUTH_BYPASS: undefined });
     expect(res.status).toBe(401);
   });
 });

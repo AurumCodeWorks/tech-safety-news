@@ -16,7 +16,7 @@ const MOON = '<path d="M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 
 const svg = (paths: string, cls: string) =>
   `<svg class="${cls}" aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-4px;margin-right:6px">${paths}</svg>`;
 
-const TOGGLE_BUTTON = `<button id="theme-toggle" class="toggle t-text" type="button" aria-label="Switch to dark mode" style="background:transparent;border:1px solid #D3D1C7;color:inherit;border-radius:999px;padding:8px 14px;font:16px Arial,Helvetica,sans-serif;cursor:pointer">${svg(MOON, 'i-moon')}${svg(SUN, 'i-sun')}<span>Dark mode</span></button>`;
+const TOGGLE_BUTTON = `<button id="theme-toggle" class="toggle t-text" type="button" aria-label="Switch to dark mode" style="background:transparent;border:1px solid #D3D1C7;color:inherit;border-radius:6px;padding:8px 14px;font:16px Arial,Helvetica,sans-serif;cursor:pointer">${svg(MOON, 'i-moon')}${svg(SUN, 'i-sun')}<span>Dark mode</span></button>`;
 
 const TOGGLE_SCRIPT = `<script>(function(){var r=document.documentElement,b=document.getElementById('theme-toggle');
 try{var s=localStorage.getItem('tsn-theme');if(s==='light'||s==='dark')r.setAttribute('data-theme',s);}catch(e){}
@@ -36,7 +36,7 @@ function ogTags(base: string, title: string, description: string) {
 
 function ceWidget(certId: string) {
   const id = encodeURIComponent(certId);
-  return `<div class="ce-panel" style="max-width:600px;margin:0 auto 40px;padding:0 12px"><div style="display:inline-block;background:#FFFFFF;border-radius:12px;padding:8px"><iframe src="https://registry.blockmarktech.com/certificates/${id}/widget/?tooltip_position=bottom_right&amp;theme=transparent&amp;non_padded=t&amp;hover=t" style="border:none;height:187px;width:132px;" loading="lazy" title="Cyber Essentials Plus certificate"></iframe></div></div>`;
+  return `<div class="ce-panel" style="max-width:600px;margin:0 auto 40px;padding:0 12px"><div style="display:inline-block;background:#FFFFFF;border-radius:8px;padding:8px"><iframe src="https://registry.blockmarktech.com/certificates/${id}/widget/?tooltip_position=bottom_right&amp;theme=transparent&amp;non_padded=t&amp;hover=t" style="border:none;height:187px;width:132px;" loading="lazy" title="Cyber Essentials Plus certificate"></iframe></div></div>`;
 }
 
 function notFound(settings: Settings) {

@@ -83,7 +83,7 @@ p {
   align-items: center;
   gap: 10px;
   padding: 9px 10px;
-  border-radius: 8px;
+  border-radius: 5px;
   color: var(--tsn-text-body);
   text-decoration: none;
 }
@@ -118,7 +118,7 @@ p {
 .card {
   background: var(--tsn-surface);
   border: 1px solid var(--tsn-border);
-  border-radius: 12px;
+  border-radius: 8px;
   padding: 18px 20px;
 }
 .stack {
@@ -140,7 +140,7 @@ p {
 .metric {
   background: var(--tsn-surface);
   border: 1px solid var(--tsn-border);
-  border-radius: 10px;
+  border-radius: 6px;
   padding: 14px 16px;
 }
 .metric .label {
@@ -163,7 +163,7 @@ p {
   border: 1px solid var(--tsn-border);
   background: var(--tsn-surface);
   color: var(--tsn-text);
-  border-radius: 8px;
+  border-radius: 5px;
   padding: 8px 14px;
   font: inherit;
   cursor: pointer;
@@ -220,7 +220,7 @@ select {
   color: var(--tsn-text);
   background: var(--tsn-page-bg);
   border: 1px solid var(--tsn-border);
-  border-radius: 8px;
+  border-radius: 5px;
   padding: 8px 10px;
   width: 100%;
 }
@@ -236,7 +236,7 @@ textarea {
   display: flex;
   gap: 10px;
   align-items: flex-start;
-  border-radius: 10px;
+  border-radius: 6px;
   padding: 12px 14px;
   margin-bottom: 16px;
   border: 1px solid var(--tsn-border);
@@ -257,7 +257,7 @@ textarea {
   font-size: 13px;
   font-weight: 600;
   padding: 2px 9px;
-  border-radius: 999px;
+  border-radius: 6px;
   background: var(--tsn-page-bg);
   color: var(--tsn-text-body);
   border: 1px solid var(--tsn-border);
@@ -283,7 +283,7 @@ table.list {
   border-collapse: collapse;
   background: var(--tsn-surface);
   border: 1px solid var(--tsn-border);
-  border-radius: 12px;
+  border-radius: 8px;
   overflow: hidden;
 }
 table.list th,
@@ -319,7 +319,7 @@ table.list tr:last-child td {
 }
 .dialog {
   background: var(--tsn-surface);
-  border-radius: 14px;
+  border-radius: 10px;
   padding: 22px;
   width: min(560px, 100%);
   max-height: 90vh;
