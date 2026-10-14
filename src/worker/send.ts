@@ -32,12 +32,12 @@ export async function preflight(env: Env, campaignId: number): Promise<Preflight
   const campaign = await getCampaign(env.DB, campaignId);
   if (!campaign) return { ok: false, reasons: ['Email not found'] };
   const settings = await getSettings(env.DB);
-  const [verified, recipients] = await Promise.all([
-    createMailgun(env, settings.sender_name).domainVerified(),
+  const [domain, recipients] = await Promise.all([
+    createMailgun(env, settings.sender_name).domainStatus(),
     resolveRecipients(env.DB, campaign.listIds),
   ]);
   const reasons: string[] = [];
-  if (!verified) reasons.push(REASONS.mailgun(env.MAILGUN_DOMAIN));
+  if (domain === 'unverified') reasons.push(REASONS.mailgun(env.MAILGUN_DOMAIN));
   if (!campaign.testSentAt || campaign.testSentAt < campaign.updatedAt) reasons.push(REASONS.test);
   reasons.push(...contentProblems(campaign));
   if (recipients.recipients.length === 0) reasons.push(REASONS.recipients);

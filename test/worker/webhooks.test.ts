@@ -124,7 +124,7 @@ describe('stats and status', () => {
       .bind(NOW, NOW)
       .run();
     const status = (await (await api('/api/status')).json()) as StatusDto;
-    expect(status.mailgunVerified).toBe(false);
+    expect(status.mailgunDomain).toBe('unverified');
     expect(status.nextScheduled).toMatchObject({ subject: 'Soon', scheduledAt: '2030-01-01T09:00:00.000Z' });
     expect(status.lastSent).not.toBeNull();
   });

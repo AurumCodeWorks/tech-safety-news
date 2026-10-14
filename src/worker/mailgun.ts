@@ -21,6 +21,7 @@ export class MailgunError extends Error {
 }
 
 export type Mailgun = ReturnType<typeof createMailgun>;
+export type DomainStatus = 'verified' | 'unverified' | 'unknown';
 
 export function createMailgun(env: Env, senderName: string, fetchImpl: typeof fetch = fetch) {
   const auth = `Basic ${btoa(`api:${env.MAILGUN_API_KEY}`)}`;
@@ -48,15 +49,20 @@ export function createMailgun(env: Env, senderName: string, fetchImpl: typeof fe
       return { id: data.id };
     },
 
-    async domainVerified(): Promise<boolean> {
+    /**
+     * 'unknown' means the key isn't allowed to read domain settings (Mailgun domain sending keys
+     * can only send). Sending isn't blocked then: the required test send is the safety net.
+     */
+    async domainStatus(): Promise<DomainStatus> {
       try {
         const res = await fetchImpl(`${base}/v4/domains/${env.MAILGUN_DOMAIN}`, { headers: { Authorization: auth } });
-        if (!res.ok) return false;
+        if (res.status === 401 || res.status === 403) return 'unknown';
+        if (!res.ok) return 'unverified';
         const data = (await res.json()) as { domain?: { state?: string }; sending_dns_records?: { valid?: string }[] };
         const records = data.sending_dns_records ?? [];
-        return data.domain?.state === 'active' && records.length > 0 && records.every((r) => r.valid === 'valid');
+        return data.domain?.state === 'active' && records.length > 0 && records.every((r) => r.valid === 'valid') ? 'verified' : 'unverified';
       } catch {
-        return false;
+        return 'unverified';
       }
     },
   };

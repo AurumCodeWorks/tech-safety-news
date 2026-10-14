@@ -7,9 +7,11 @@ import { api, mockFetch, uid } from './helpers';
 
 const tip = { id: 't1', type: 'tip', title: 'Agree a family password', body: 'Pick a word.' };
 
-function stubMailgun(verified = true) {
+function stubMailgun(verified: boolean | 'sending-key' = true) {
   const m = mockFetch((url) =>
-    url.includes('/v4/domains/')
+    url.includes('/v4/domains/') && verified === 'sending-key'
+      ? new Response('Forbidden', { status: 401 })
+      : url.includes('/v4/domains/')
       ? Response.json({ domain: { state: verified ? 'active' : 'unverified' }, sending_dns_records: [{ valid: verified ? 'valid' : 'invalid' }] })
       : Response.json({ id: '<m1@mg>', message: 'Queued' }),
   );
@@ -43,6 +45,13 @@ describe('preflight', () => {
     const r = await preflight(env, id);
     expect(r.ok).toBe(false);
     expect(!r.ok && r.reasons).toContain("Mailgun hasn't verified news.enhancedgroup.co.uk yet");
+  });
+
+  it('does not block when a sending-only key cannot read the domain status', async () => {
+    stubMailgun('sending-key');
+    const id = await readyCampaign();
+    await api(`/api/campaigns/${id}/test`, { method: 'POST', json: {} });
+    expect(await preflight(env, id)).toEqual({ ok: true, recipients: 1 });
   });
 
   it('lists every content problem', async () => {

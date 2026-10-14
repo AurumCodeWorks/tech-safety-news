@@ -40,12 +40,17 @@ describe('Mailgun client', () => {
 
   it('reports the domain as verified only when active with valid sending records', async () => {
     const ok = mockFetch(() => Response.json({ domain: { state: 'active' }, sending_dns_records: [{ valid: 'valid' }, { valid: 'valid' }] }));
-    expect(await createMailgun(env, 'X', ok.fn).domainVerified()).toBe(true);
+    expect(await createMailgun(env, 'X', ok.fn).domainStatus()).toBe('verified');
     expect(ok.calls[0].url).toBe('https://api.eu.mailgun.net/v4/domains/news.enhancedgroup.co.uk');
     const bad = mockFetch(() => Response.json({ domain: { state: 'active' }, sending_dns_records: [{ valid: 'valid' }, { valid: 'invalid' }] }));
-    expect(await createMailgun(env, 'X', bad.fn).domainVerified()).toBe(false);
+    expect(await createMailgun(env, 'X', bad.fn).domainStatus()).toBe('unverified');
     const down = mockFetch(() => new Response('oops', { status: 500 }));
-    expect(await createMailgun(env, 'X', down.fn).domainVerified()).toBe(false);
+    expect(await createMailgun(env, 'X', down.fn).domainStatus()).toBe('unverified');
+    // Domain sending keys can only send, so Mailgun refuses the status lookup: that's 'unknown', not a failure.
+    const sendingKey = mockFetch(() => new Response('Forbidden', { status: 401 }));
+    expect(await createMailgun(env, 'X', sendingKey.fn).domainStatus()).toBe('unknown');
+    const forbidden = mockFetch(() => new Response('Forbidden', { status: 403 }));
+    expect(await createMailgun(env, 'X', forbidden.fn).domainStatus()).toBe('unknown');
   });
 });
 

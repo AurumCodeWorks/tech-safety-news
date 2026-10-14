@@ -41,13 +41,13 @@ export const statusRoutes = new Hono<AppEnv>();
 statusRoutes.get('/', async (c) => {
   const db = c.env.DB;
   const settings = await getSettings(db);
-  const [mailgunVerified, next, last] = await Promise.all([
-    createMailgun(c.env, settings.sender_name).domainVerified(),
+  const [mailgunDomain, next, last] = await Promise.all([
+    createMailgun(c.env, settings.sender_name).domainStatus(),
     db.prepare("SELECT id, subject, scheduled_at AS scheduledAt FROM campaigns WHERE status = 'scheduled' ORDER BY scheduled_at LIMIT 1").first<StatusDto['nextScheduled']>(),
     db.prepare("SELECT id, subject, sent_at AS sentAt FROM campaigns WHERE status = 'sent' ORDER BY sent_at DESC, id DESC LIMIT 1").first<{ id: number; subject: string; sentAt: string }>(),
   ]);
   const body: StatusDto = {
-    mailgunVerified,
+    mailgunDomain,
     nextScheduled: next ?? null,
     lastSent: last ? { ...last, stats: await campaignStats(db, last.id) } : null,
   };

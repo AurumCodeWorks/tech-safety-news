@@ -36,7 +36,8 @@ export type CampaignStats = {
 };
 
 export type StatusDto = {
-  mailgunVerified: boolean;
+  /** 'unknown' when the Mailgun key is a sending-only key that can't read domain status. */
+  mailgunDomain: 'verified' | 'unverified' | 'unknown';
   nextScheduled: { id: number; subject: string; scheduledAt: string } | null;
   lastSent: { id: number; subject: string; sentAt: string; stats: CampaignStats } | null;
 };
