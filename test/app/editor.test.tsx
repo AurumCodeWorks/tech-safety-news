@@ -88,6 +88,26 @@ describe('editor', () => {
     expect(await screen.findByText('Saved')).toBeInTheDocument();
   });
 
+  it('saves a newly ticked list before re-checking, so Send becomes available', async () => {
+    let savedLists: number[] = [];
+    setup({
+      'PUT /api/campaigns/5': (body: unknown) => {
+        savedLists = (body as { listIds: number[] }).listIds;
+        return { ...draft, ...(body as object) };
+      },
+      'GET /api/lists': { lists: [{ id: 1, name: 'Clients', description: '', memberCount: 3, updatedAt: '2026-11-01T00:00:00.000Z' }] },
+      'POST /api/recipients/count': { count: 3, duplicatesRemoved: 0, suppressed: 0 },
+      'GET /api/campaigns/5/preflight': () =>
+        savedLists.includes(1) ? { ok: true, recipients: 3 } : { ok: false, reasons: ['Pick at least one list with people on it'] },
+    });
+    const user = userEvent.setup();
+    renderEditor();
+    await user.click(await screen.findByRole('button', { name: 'Send or schedule' }));
+    await user.click(await screen.findByRole('checkbox', { name: /Clients/ }));
+    expect(await screen.findByText('Ready to send')).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: 'Send now' })).toBeEnabled();
+  });
+
   it('shows character counters', async () => {
     renderEditor();
     expect(await screen.findByText('15 / 90')).toBeInTheDocument();

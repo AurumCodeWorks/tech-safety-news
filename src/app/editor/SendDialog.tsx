@@ -27,6 +27,9 @@ export function SendDialog({ campaign, onListsChange, flush, onClose, onDone }: 
   const [time, setTime] = useState('09:00');
 
   const recheck = useCallback(async () => {
+    // Child effects run before the editor's autosave effect queues the new list choice,
+    // so wait a tick before flushing — otherwise the server checks the old lists.
+    await new Promise((r) => setTimeout(r, 0));
     await flush();
     setCheck(await api<PreflightResult>(`/api/campaigns/${campaign.id}/preflight`));
   }, [campaign.id, flush]);
