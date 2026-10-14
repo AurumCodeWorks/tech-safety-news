@@ -22,7 +22,8 @@ export function Preview({ content }: { content: Content }) {
   }, [content]);
 
   // The email's own dark styles sit behind prefers-color-scheme; force them on for the dark preview.
-  const shown = dark ? html.replace('@media (prefers-color-scheme: dark)', '@media all') : html;
+  // …and off for the light preview, even when this computer is in dark mode.
+  const shown = html.replace('@media (prefers-color-scheme: dark)', dark ? '@media all' : '@media not all');
 
   return (
     <div className="stack" style={{ position: 'sticky', top: 16 }}>
@@ -47,7 +48,8 @@ export function Preview({ content }: { content: Content }) {
       <iframe
         title="Email preview"
         srcDoc={shown}
-        sandbox=""
+        // Same origin so images load (an opaque origin can't fetch from localhost); scripts stay blocked.
+        sandbox="allow-same-origin"
         style={{ width: width + 24, maxWidth: '100%', height: '75vh', border: '1px solid var(--tsn-border)', borderRadius: 12, background: '#fff' }}
       />
     </div>

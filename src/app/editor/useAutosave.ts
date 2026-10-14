@@ -11,7 +11,7 @@ export function useAutosave<T>(value: T | null, save: (v: T) => Promise<void>, d
   const [error, setError] = useState<string | null>(null);
   const timer = useRef<ReturnType<typeof setTimeout> | null>(null);
   const pending = useRef<T | null>(null);
-  const first = useRef(true);
+  const lastSaved = useRef<string | null>(null);
   const saveRef = useRef(save);
   saveRef.current = save;
 
@@ -24,6 +24,7 @@ export function useAutosave<T>(value: T | null, save: (v: T) => Promise<void>, d
     setState('saving');
     try {
       await saveRef.current(v);
+      lastSaved.current = JSON.stringify(v);
       setState('saved');
       setError(null);
     } catch (e) {
@@ -34,10 +35,13 @@ export function useAutosave<T>(value: T | null, save: (v: T) => Promise<void>, d
 
   useEffect(() => {
     if (value === null) return;
-    if (first.current) {
-      first.current = false;
+    // Only real changes are saved: a save bumps updated_at, which would invalidate the last test send.
+    const json = JSON.stringify(value);
+    if (lastSaved.current === null) {
+      lastSaved.current = json;
       return;
     }
+    if (json === lastSaved.current) return;
     pending.current = value;
     if (timer.current) clearTimeout(timer.current);
     timer.current = setTimeout(() => void run(), delay);
