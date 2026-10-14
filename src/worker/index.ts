@@ -1,9 +1,12 @@
 import { Hono } from 'hono';
+import { createAccessMiddleware } from './auth';
 import type { AppEnv, Env } from './env';
 
 export const app = new Hono<AppEnv>();
 
 app.get('/healthz', (c) => c.json({ ok: true }));
+
+app.use('/api/*', createAccessMiddleware());
 
 app.get('/admin', (c) => c.env.ASSETS.fetch(new URL('/index.html', c.req.url)));
 app.get('/admin/*', (c) => c.env.ASSETS.fetch(new URL('/index.html', c.req.url)));
