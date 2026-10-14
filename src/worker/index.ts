@@ -2,6 +2,7 @@ import { Hono } from 'hono';
 import { createAccessMiddleware } from './auth';
 import type { AppEnv, Env } from './env';
 import { listsRoutes } from './routes/api-lists';
+import { recipientsRoutes, suppressionsRoutes } from './routes/api-suppressions';
 
 export const app = new Hono<AppEnv>();
 
@@ -9,6 +10,8 @@ app.get('/healthz', (c) => c.json({ ok: true }));
 
 app.use('/api/*', createAccessMiddleware());
 app.route('/api/lists', listsRoutes);
+app.route('/api/suppressions', suppressionsRoutes);
+app.route('/api/recipients', recipientsRoutes);
 
 app.get('/admin', (c) => c.env.ASSETS.fetch(new URL('/index.html', c.req.url)));
 app.get('/admin/*', (c) => c.env.ASSETS.fetch(new URL('/index.html', c.req.url)));
