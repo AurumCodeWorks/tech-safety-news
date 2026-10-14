@@ -24,7 +24,7 @@
 - Contrast: text ≥ 4.5:1, large text/meaningful graphics ≥ 3:1. Cyan-ink `#00AEEF` and yellow-ink `#FFF200` never used as text on light backgrounds.
 - Icons are Tabler only. **No emoji anywhere** in UI, email, or copy.
 - Light and dark themes for admin, archive and email.
-- Footer copy (exact): "We will never ask for your password or bank details by email." and "This is a news-only email — replies aren't read. If you're worried about something, call us on {phone}."
+- Footer copy (exact): "Messages from this service will never ask for your personal information." and "This is a news-only email — replies aren't read. If you're worried about something, call us on {phone}."
 - Pill labels (exact): "Scam alert", "Tip of the month", "Watch out". Block types: `scam_alert`, `tip`, `warning`, `text`, `image`, `call_us`, `divider`.
 
 ## Review Focus
@@ -272,7 +272,7 @@ for (const img of html.match(/<img[^>]*>/g)!) { expect(img).toMatch(/alt="[^"]+"
 expect(html).toContain('Ann O&#x27;Brien &lt;x&gt;'); // or &#39; — assert no raw "<x>"
 expect(html).not.toContain('<x>');
 expect(text).toContain("Ann O'Brien <x>");
-expect(html).toContain('We will never ask for your password or bank details by email.');
+expect(html).toContain('Messages from this service will never ask for your personal information.');
 expect(html).toContain('Company no. 13094854');
 expect(html).toContain('registry.blockmarktech.com/certificates/79f52d13-3d5b-4e58-b17a-7e40adecb563/email-image/');
 expect(html).toContain('href="tel:01174729200"');

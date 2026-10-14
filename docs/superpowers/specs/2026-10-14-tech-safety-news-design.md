@@ -167,7 +167,7 @@ One renderer in `/src/email` produces `{ html, text }` from `{ campaign, setting
 1. Header: logo tile + wordmark, issue date, then a thin cyan/magenta/yellow rule.
 2. Blocks.
 3. Footer:
-   - Green shield-check line: "We will never ask for your password or bank details by email."
+   - Green shield-check line: "Messages from this service will never ask for your personal information."
    - "This is a news-only email — replies aren't read. If you're worried about something, call us on {phone}."
    - Enhanced Technology Solutions Ltd · Company no. 13094854 · Registered office: Unit 43 Dixon Business Centre, Dixon Road, Bristol, BS4 5QW (seeded into settings, editable).
    - "View in browser" · "Unsubscribe" (personal link).

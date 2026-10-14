@@ -44,7 +44,7 @@ describe('renderCampaign (email mode)', async () => {
   });
 
   it('includes the exact footer copy and company details', () => {
-    expect(html).toContain('We will never ask for your password or bank details by email.');
+    expect(html).toContain('Messages from this service will never ask for your personal information.');
     expect(html).toContain('This is a news-only email — replies aren’t read. If you’re worried about something, call us on 0117 472 9200.');
     expect(html).toContain('Company no. 13094854');
     expect(html).toContain('Unit 43 Dixon Business Centre, Dixon Road, Bristol, BS4 5QW');
@@ -89,7 +89,7 @@ describe('renderCampaign (email mode)', async () => {
     expect(text).toContain('TIP OF THE MONTH: AGREE A FAMILY PASSWORD');
     expect(text).toContain('WATCH OUT: WINDOWS UPDATE POP-UPS');
     expect(text).toContain('[Image: A fake delivery text]');
-    expect(text).toContain('We will never ask for your password or bank details by email.');
+    expect(text).toContain('Messages from this service will never ask for your personal information.');
   });
 });
 
